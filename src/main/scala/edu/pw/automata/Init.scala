@@ -1,6 +1,7 @@
 package edu.pw.automata
 
 import org.scalajs.dom.html
+
 import scala.scalajs.js.annotation.JSExport
 import scalatags.JsDom.all._
 
