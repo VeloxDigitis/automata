@@ -6,8 +6,8 @@ Finite-state automaton is new approach to builing responsive web app that lets u
 
 Automa has its own [Wiki](https://github.com/VeloxDigitis/automata/wiki)!
 
-## [Version](https://github.com/VeloxDigitis/automata/wiki/Change-log)
-[![Build Status](https://travis-ci.com/VeloxDigitis/automata.svg?token=bKfLxyJWbLwjkEGAuqNi&branch=master)](https://travis-ci.com/VeloxDigitis/automata)  
+## [Version](https://github.com/VeloxDigitis/automata/wiki/Change-log) [![Build Status](https://travis-ci.com/VeloxDigitis/automata.svg?token=bKfLxyJWbLwjkEGAuqNi&branch=master)](https://travis-ci.com/VeloxDigitis/automata)  
+
 `Pre-alpha`  
 `0.1-SNAPSHOT`
 
