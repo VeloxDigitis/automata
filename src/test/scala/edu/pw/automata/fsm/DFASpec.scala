@@ -17,7 +17,7 @@ class DFASpec extends FlatSpec with Matchers{
 
   "DFA" should "go trough states" in {
     dfa.move(Seq(s1))     should be (Some(q1))
-    dfa.move(Seq(s1, s1)) should be (Some(q1))
+    dfa.move(Seq(s1, s1)) should be (Some(q0))
   }
 
 }
