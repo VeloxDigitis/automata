@@ -1,7 +1,6 @@
 package edu.pw.automata.graph
 
-import org.singlespaced.d3js.Ops._
-import org.singlespaced.d3js.d3
+import fr.iscpif.scaladget.mapping._
 
 import scala.scalajs.js
 
@@ -41,7 +40,7 @@ object GraphService {
       .attr("y", rectYFun)
       .attr("width", barWidth)
       .attr("height", rectHeightFun)
-      .style("fill", rectColorFun)
+      .attr("fill", rectColorFun)
   }
 
 }

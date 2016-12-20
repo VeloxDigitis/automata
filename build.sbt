@@ -2,9 +2,9 @@ import Dependencies._
 
 name          := "Automata"
 organization  := "org.singlespaced"
-scalaVersion  := "2.12.1"
+scalaVersion  := "2.11.8"
 
-version       := "0.2-SNAPSHOT"
+version       := "0.3.1-SNAPSHOT"
 
 enablePlugins(ScalaJSPlugin, WorkbenchPlugin)
 
