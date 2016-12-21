@@ -15,7 +15,6 @@ object Dependencies {
     "org.scala-js"  %%% "scalajs-dom" 	  % scalaJSdomVersion,
     "be.doeraene"   %%% "scalajs-jquery"  % scalaJSdomVersion,
     "com.lihaoyi"   %%% "scalatags"       % scalatagsVersion,
-    "com.github.karasiq" %%% "scalajs-bootstrap" % scaladjsBootstrapVersion,
     "org.scalactic" %%% "scalactic"       % scalatestVersion,
     "org.scalatest" %%% "scalatest"       % scalatestVersion % "test"
   ))

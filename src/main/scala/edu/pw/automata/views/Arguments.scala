@@ -2,14 +2,13 @@ package edu.pw.automata.views
 
 import org.scalajs.dom.Element
 
-object Arguments extends Section{
+import scalatags.JsDom.all._
 
-  import scalatags.JsDom.all._
+class Arguments extends Section{
 
-  lazy val template = div(
-    h1("Hello world")
+  lazy val template = h1(
+    "Hello world"
   )
 
-  def getTemplate(): Element = template.render
-
+  override def getTemplate(): Element = template.render
 }
