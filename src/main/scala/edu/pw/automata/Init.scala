@@ -2,7 +2,7 @@ package edu.pw.automata
 
 import edu.pw.automata.views.Index
 import org.scalajs.dom._
-import org.scalajs.jquery._
+import io.udash.wrappers.jquery._
 
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSExport
@@ -11,5 +11,5 @@ import scala.scalajs.js.annotation.JSExport
 object Init extends js.JSApp{
 
   @JSExport
-  def main(): Unit = jQuery(() ⇒ Index.render(document.getElementById("application")))
+  def main(): Unit = jQ(() ⇒ Index.render(document.getElementById("application")))
 }

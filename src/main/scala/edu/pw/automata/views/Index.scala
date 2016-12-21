@@ -2,13 +2,18 @@ package edu.pw.automata.views
 
 import org.scalajs.dom.Element
 
+import scalatags.JsDom.all._
 import scala.language.postfixOps
 
 object Index {
 
   def render(app: Element) = {
 
-    app.appendChild(new Arguments().getTemplate())
+    val main = div(cls := "container")(
+      new Arguments().getTemplate()
+    )
+
+    app.appendChild(main.render)
 
   }
 
