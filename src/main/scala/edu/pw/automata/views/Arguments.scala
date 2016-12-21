@@ -1,6 +1,5 @@
 package edu.pw.automata.views
 
-import fr.iscpif.scaladget.api.{BootstrapTags => bs}
 import org.scalajs.dom.Element
 
 object Arguments extends Section{

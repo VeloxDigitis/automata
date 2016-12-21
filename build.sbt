@@ -1,7 +1,7 @@
 import Dependencies._
 
 name          := "Automata"
-organization  := "org.singlespaced"
+organization  := "pw.edu"
 scalaVersion  := "2.11.8"
 
 version       := "0.3.1-SNAPSHOT"
