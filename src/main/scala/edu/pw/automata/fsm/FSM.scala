@@ -56,6 +56,8 @@ class FSM(Q:   States,
 
   def size = Q.size
 
+  def alphabetSize = Σ.size
+
   override def toString = definition.map(e => s"${e._1} => {${e._2.mkString(",")}}").mkString("\n")
 
 }
