@@ -10,8 +10,11 @@ object Index {
   def render(app: Element) = {
 
     val main = div(cls := "container")(
-      new Arguments().getTemplate()
+      new Arguments().getTemplate(),
+      new Definition().getTemplate()
     )
+
+    app.appendChild(new Navbar().getTemplate())
 
     app.appendChild(main.render)
 

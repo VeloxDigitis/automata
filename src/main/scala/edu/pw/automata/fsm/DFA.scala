@@ -31,3 +31,9 @@ class DFA(Q:   States,
   }
 
 }
+
+object DFA {
+
+  def empty() = new DFA(Set.empty, Set.empty, Set.empty, None, Set.empty)
+
+}
