@@ -6,7 +6,6 @@ import io.udash._
 import io.udash.bootstrap.BootstrapStyles
 import io.udash.bootstrap.BootstrapStyles.Grid
 import io.udash.bootstrap.button.{ButtonStyle, UdashButton, UdashButtonGroup}
-import io.udash.bootstrap.dropdown.UdashDropdown
 import io.udash.bootstrap.form.UdashInputGroup
 import io.udash.bootstrap.table.UdashTable
 import io.udash.bootstrap.utils.{UdashListGroup, UdashPageHeader}
@@ -17,12 +16,19 @@ import scalatags.JsDom.all._
 
 class Arguments extends Section with TranslatedView{
 
+  lazy val demoBtn = UdashButton(disabled = Property(true))(t(Translations.sections.example))
+
+  demoBtn.listen{case e => {
+    DFAService.loadDemo()
+    DFAService.reload()
+  }}
+
   lazy val header = div()(
     UdashPageHeader(h1(t(Translations.sections.args), small(t(Translations.sections.argsDesc)))).render,
     UdashButtonGroup()(
       UdashButton()(t(Translations.sections.load)).render,
       UdashButton()(t(Translations.sections.save)).render,
-      UdashButton()(t(Translations.sections.example)).render
+      demoBtn.render
     ).render
   )
 

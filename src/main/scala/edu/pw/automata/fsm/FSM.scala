@@ -54,6 +54,9 @@ class FSM(Q:   States,
       "F" -> F
     )
 
+  def getStates = Q
+  def getAlphabet = Σ
+
   def size = Q.size
 
   def alphabetSize = Σ.size

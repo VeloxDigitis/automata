@@ -1,10 +1,9 @@
 package edu.pw.automata
 
-import edu.pw.automata.fsm.{DFA, State}
+import edu.pw.automata.fsm.{DFA, DFADemo, State}
 import io.udash.properties.seq.SeqProperty
 import io.udash.properties.single.Property
 
-import scala.collection.mutable.ListBuffer
 import scala.concurrent.ExecutionContext.Implicits.global
 
 object DFAService {
@@ -30,6 +29,16 @@ object DFAService {
 
   def setTransition(state: String, input: String, to: String) = {
     println(state + " " + input + " " + to)
+  }
+
+  def loadDemo() = dfa = DFADemo.get()
+
+  def reload() {
+    Definition.stateNames.set(dfa.getStates.map(_.toString).toSeq)
+    Definition.alphabetNames.set(dfa.getAlphabet.map(_.toString).toSeq)
+
+    //ADD TRANSTIONS
+
   }
 
   object Definition {
