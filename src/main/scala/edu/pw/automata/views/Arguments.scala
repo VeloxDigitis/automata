@@ -61,9 +61,9 @@ class Arguments extends Section with TranslatedView{
     row.appendChild(td(el(0)).render)
 
     for(i <- 1 to el.size - 1) {
-      val input = Property[String](el(i))
+      val input = Property[String](el(0))
 
-      input.listen(e => DFAService.setTransition(el(0), DFAService.Definition.alphabetNames.get(i), input.get))
+      input.listen(e => DFAService.setTransition(el(0), DFAService.Definition.alphabetNames.get(i - 1), e))
 
       row.appendChild(td(UdashInputGroup.input(TextInput.debounced(input).render)).render)
     }
