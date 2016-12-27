@@ -8,6 +8,7 @@ object FrontendTranslationsProvider {
   private val translations = Map(
     Lang("en") -> Bundle(BundleHash("enHash"), Map(
       "add" -> "Add",
+      "isWrong" -> "is invalid",
 
       "args" -> "Arguments",
       "argsDesc" -> "Setup your own machine",
@@ -29,6 +30,7 @@ object FrontendTranslationsProvider {
     )),
     Lang("pl") -> Bundle(BundleHash("plHash"), Map(
       "add" -> "Dodaj",
+      "isWrong" -> "zawiera blad",
 
       "args" -> "Argumenty",
       "argsDesc" -> "Skonfiguruj własną maszynę",

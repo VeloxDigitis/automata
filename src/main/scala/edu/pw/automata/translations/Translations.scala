@@ -11,6 +11,8 @@ object Translations {
 
   val add = key("add")
 
+  val isWrong = key("isWrong")
+
   object sections {
     val args = key("args")
     val argsDesc = key("argsDesc")

@@ -1,10 +1,12 @@
 package edu.pw.automata.views
 
 import edu.pw.automata.DFAService
+import edu.pw.automata.fsm.CurrentFSMValidator
 import edu.pw.automata.translations.Translations
 import io.udash._
 import io.udash.bootstrap.BootstrapStyles
 import io.udash.bootstrap.BootstrapStyles.Grid
+import io.udash.bootstrap.alert.UdashAlert
 import io.udash.bootstrap.button.{ButtonStyle, UdashButton, UdashButtonGroup}
 import io.udash.bootstrap.form.UdashInputGroup
 import io.udash.bootstrap.table.UdashTable
@@ -12,6 +14,7 @@ import io.udash.bootstrap.utils.{UdashListGroup, UdashPageHeader}
 import org.scalajs.dom.Element
 
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.util.{Failure, Success}
 import scalatags.JsDom.all._
 
 class Arguments extends Section with TranslatedView{
@@ -33,8 +36,9 @@ class Arguments extends Section with TranslatedView{
   )
 
   val transitions = div().render
-
   val columns = tr(th(b("#"))).render
+
+  var notifications = div().render
 
   lazy val currentStateName = Property[String]("")
   lazy val addStateBtn = UdashButton(ButtonStyle.Primary, block = true)(t(Translations.add))
@@ -69,7 +73,18 @@ class Arguments extends Section with TranslatedView{
     for(i <- 1 to el.size - 1) {
       val input = Property[String](el(0))
 
-      input.listen(e => DFAService.setTransition(el(0), DFAService.Definition.alphabetNames.get(i - 1), e))
+      val not = UdashAlert.danger(produce(input)(v => b(v + " is invalid!").render)).render
+
+      input.addValidator(new CurrentFSMValidator)
+      input.listen{e => input.isValid.onComplete {
+          case Success(Valid) => {
+            DFAService.setTransition(el(0), DFAService.Definition.alphabetNames.get(i - 1), e)
+            notifications.removeChild(not)
+          }
+          case Success(Invalid(errors)) => notifications.appendChild(not)
+          case Failure(ex) => println("Something gone wrong")
+        }
+      }
 
       row.appendChild(td(UdashInputGroup.input(TextInput.debounced(input).render)).render)
     }
@@ -103,7 +118,8 @@ class Arguments extends Section with TranslatedView{
       ),
       div(Grid.colMd8)(
         h3(t(Translations.fsa.transitions)),
-        transitions
+        transitions,
+        notifications
       )
     )
   )

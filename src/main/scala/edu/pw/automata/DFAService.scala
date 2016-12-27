@@ -43,13 +43,12 @@ object DFAService {
 
   object Definition {
 
-    val definition = Property[String]
+    val definition = Property[String](dfa.toString)
 
     val stateNames = SeqProperty[String]
     val alphabetNames = SeqProperty[String]
 
     val transitions = SeqProperty[Seq[String]]
-
 
     stateNames.listen(a => definition.set(dfa.toString))
     alphabetNames.listen(a => definition.set(dfa.toString))
