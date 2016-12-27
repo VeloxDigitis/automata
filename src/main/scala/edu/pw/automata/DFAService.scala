@@ -1,6 +1,6 @@
 package edu.pw.automata
 
-import edu.pw.automata.fsm.{DFA, DFADemo, State}
+import edu.pw.automata.fsm.{DFA, DFADemo, DeltaFunction, State}
 import io.udash.properties.seq.SeqProperty
 import io.udash.properties.single.Property
 
@@ -15,6 +15,9 @@ object DFAService {
     dfa = dfa.addState(s).toDFA()
     Definition.stateNames.append(s.toString)
 
+    if(dfa.size == 1)
+      dfa = dfa.setInitial(s).toDFA()
+
     Definition.transitions.append(Seq.fill(Definition.alphabetNames.size + 1)(s.toString))
   }
 
@@ -27,8 +30,12 @@ object DFAService {
     t.set(t.get.map(e => e :+ e.head))
   }
 
-  def setTransition(state: String, input: String, to: String) = {
-    println(state + " " + input + " " + to)
+  def setTransition(state: String, input: String, state2: String) = {
+    val from  = dfa.stateFromString(state)
+    val symbol = dfa.symbolFromString(input)
+    val to    = dfa.stateFromString(state2)
+    println(from.toString + " " + symbol.toString + " " + to.toString)
+    dfa = dfa.addDelta(new DeltaFunction(from.get, symbol.get, to.get)).toDFA()
   }
 
   def loadDemo() = dfa = DFADemo.get()
@@ -36,9 +43,6 @@ object DFAService {
   def reload() {
     Definition.stateNames.set(dfa.getStates.map(_.toString).toSeq)
     Definition.alphabetNames.set(dfa.getAlphabet.map(_.toString).toSeq)
-
-    //ADD TRANSTIONS
-
   }
 
   object Definition {
@@ -52,10 +56,6 @@ object DFAService {
 
     stateNames.listen(a => definition.set(dfa.toString))
     alphabetNames.listen(a => definition.set(dfa.toString))
-    transitions.listen(a => {
-
-    })
-
   }
 
 }

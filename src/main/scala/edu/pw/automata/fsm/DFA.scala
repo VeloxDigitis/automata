@@ -30,6 +30,10 @@ class DFA(Q:   States,
     move(for (x <- word.toList) yield Symbol(x toString), s)
   }
 
+  def move(word: String): Option[State] = {
+    move(word, q0)
+  }
+
 }
 
 object DFA {

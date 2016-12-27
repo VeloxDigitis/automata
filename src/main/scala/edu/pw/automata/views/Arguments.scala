@@ -71,7 +71,7 @@ class Arguments extends Section with TranslatedView{
     row.appendChild(td(el(0)).render)
 
     for(i <- 1 to el.size - 1) {
-      val input = Property[String](el(0))
+      val input = Property[String]
 
       val not = UdashAlert.danger(produce(input)(v => b(v + " is invalid!").render)).render
 
