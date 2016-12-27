@@ -1,7 +1,7 @@
 package edu.pw.automata.views
 
 import edu.pw.automata.DFAService
-import edu.pw.automata.fsm.CurrentFSMValidator
+import edu.pw.automata.fsm.ExistingStatesValidator
 import edu.pw.automata.translations.Translations
 import io.udash._
 import io.udash.bootstrap.BootstrapStyles
@@ -75,7 +75,7 @@ class Arguments extends Section with TranslatedView{
 
       val not = UdashAlert.danger(produce(input)(v => b(v + " is invalid!").render)).render
 
-      input.addValidator(new CurrentFSMValidator)
+      input.addValidator(new ExistingStatesValidator)
       input.listen{e => input.isValid.onComplete {
           case Success(Valid) => {
             DFAService.setTransition(el(0), DFAService.Definition.alphabetNames.get(i - 1), e)

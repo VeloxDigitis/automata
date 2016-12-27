@@ -5,7 +5,7 @@ import io.udash.properties.{Invalid, Valid, ValidationResult, Validator}
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class CurrentFSMValidator extends Validator[String]{
+class ExistingStatesValidator extends Validator[String]{
 
   def apply(name: String)(implicit ec: ExecutionContext): Future[ValidationResult] = Future {
       if (DFAService.dfa.getStates.map(_.toString).contains(name)) Valid
