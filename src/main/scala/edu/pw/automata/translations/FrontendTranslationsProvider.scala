@@ -24,11 +24,13 @@ object FrontendTranslationsProvider {
       "states" -> "States",
       "alphabet" -> "Alphabet",
       "transitions" -> "Transitions",
+      "starting" -> "Starting",
 
       "defTitle" -> "Definition",
       "diagramTitle" -> "Diagram",
 
       "addAccepting" -> "Accepting",
+      "removeAccepting" -> "Remove",
 
       "aYes" -> "Accepts",
       "aNo" -> "Doesn't accept",
@@ -52,11 +54,13 @@ object FrontendTranslationsProvider {
       "states" -> "Stany",
       "alphabet" -> "Alfabet",
       "transitions" -> "Przejścia",
+      "starting" -> "Stan startowy",
 
       "defTitle" -> "Definicja",
       "diagramTitle" -> "Diagram",
 
       "addAccepting" -> "Kończący",
+      "removeAccepting" -> "Usuń",
 
       "aYes" -> "Akceptuje",
       "aNo" -> "Nie akceptuje",

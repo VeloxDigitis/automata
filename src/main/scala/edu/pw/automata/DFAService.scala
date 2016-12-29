@@ -40,7 +40,7 @@ object DFAService {
     Definition.reload
   }
 
-  def addAccepting(state: String): Unit = {
+  def addAccepting(state: String) = {
     val s = dfa.stateFromString(state).get
 
     if(dfa.isAccepting(s))
@@ -49,6 +49,17 @@ object DFAService {
       dfa = dfa.addAccepting(s).toDFA()
 
     Definition.reload
+  }
+
+  def setStarting(state: String): Boolean = {
+    val s = dfa.stateFromString(state)
+
+    if(s.isDefined)
+      dfa = dfa.setInitial(s.get).toDFA()
+
+    Definition.reload
+
+    s.isDefined
   }
 
   def loadDemo() = dfa = DFADemo.get()

@@ -27,11 +27,14 @@ object Translations {
   }
 
   object fsa {
+
     val fsa = key("fsa")
     val states = key("states")
     val alphabet = key("alphabet")
     val transitions = key("transitions")
     val addAccepting = key("addAccepting")
+    val removeAccepting = key("removeAccepting")
+    val starting = key("starting")
 
     object accepting {
       val yes = key("aYes")
