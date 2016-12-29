@@ -1,5 +1,6 @@
 package edu.pw.automata
 
+import edu.pw.automata.diagram.GraphService
 import edu.pw.automata.fsm.{DFA, DFADemo, DeltaFunction, State}
 import io.udash.properties.seq.SeqProperty
 import io.udash.properties.single.Property
@@ -81,7 +82,10 @@ object DFAService {
     stateNames.listen(_ => reload)
     alphabetNames.listen(_ => reload)
 
-    def reload = definition.set(dfa.toString)
+    def reload = {
+      definition.set(dfa.toString)
+      GraphService.repaint()
+    }
   }
 
 }

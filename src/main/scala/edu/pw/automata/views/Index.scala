@@ -1,5 +1,6 @@
 package edu.pw.automata.views
 
+import edu.pw.automata.diagram.GraphService
 import org.scalajs.dom.Element
 
 import scalatags.JsDom.all._

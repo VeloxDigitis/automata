@@ -57,6 +57,8 @@ class FSM(Q:   States,
   def getStates = Q
   def getAlphabet = Σ
 
+  def getDelta() = δ
+
   def stateFromString(name: String) = Q.find(_.toString == name)
 
   def symbolFromString(name: String) = Σ.find(_.name == name)
