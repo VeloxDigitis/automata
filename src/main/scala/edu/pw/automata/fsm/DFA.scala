@@ -9,6 +9,8 @@ class DFA(Q:   States,
           F:   States)
   extends FSM(Q, Σ, δ, q0, F) {
 
+  override def addDelta(d: DeltaFunction): FSM   = (Q, Σ, δ.filter(a => !(a.a == d.a && a.symbol == d.symbol)) + d, q0, F)
+
   def move(word: Word): Option[State] = move(word, q0)
 
   def move(symbol: Symbol, s: Option[State]): Option[State] = {

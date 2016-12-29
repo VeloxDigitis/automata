@@ -34,8 +34,10 @@ object DFAService {
     val from  = dfa.stateFromString(state)
     val symbol = dfa.symbolFromString(input)
     val to    = dfa.stateFromString(state2)
-    println(from.toString + " " + symbol.toString + " " + to.toString)
+
     dfa = dfa.addDelta(new DeltaFunction(from.get, symbol.get, to.get)).toDFA()
+
+    Definition.definition.set(dfa.toString)
   }
 
   def loadDemo() = dfa = DFADemo.get()
@@ -54,8 +56,8 @@ object DFAService {
 
     val transitions = SeqProperty[Seq[String]]
 
-    stateNames.listen(a => definition.set(dfa.toString))
-    alphabetNames.listen(a => definition.set(dfa.toString))
+    stateNames.listen(_ => definition.set(dfa.toString))
+    alphabetNames.listen(_ => definition.set(dfa.toString))
   }
 
 }
