@@ -1,7 +1,7 @@
 package edu.pw.automata.views
 
 import edu.pw.automata.DFAService
-import edu.pw.automata.translations.Translations
+import edu.pw.automata.translations.Translations._
 import io.udash.bootstrap.BootstrapStyles
 import io.udash.bootstrap.BootstrapStyles.Grid
 import io.udash.bootstrap.utils.UdashPageHeader
@@ -18,16 +18,27 @@ class Definition extends Section with TranslatedView{
   val input = Property[String]
   val notifications = div().render
 
+  def chooseNotification(word: String) = {
+    val stateO = DFAService.dfa.move(word)
+    if(stateO.isDefined)
+      if(DFAService.dfa.isAccepting(stateO.get))
+        UdashAlert.success(t(fsa.accepting.yes)).render
+      else
+        UdashAlert.warning(t(fsa.accepting.no)).render
+    else
+      UdashAlert.warning(t(fsa.accepting.error)).render
+  }
+
   input.listen(word => {
     notifications.innerHTML = ""
-    notifications.appendChild(UdashAlert.info(DFAService.dfa.move(word).toString).render)
+    notifications appendChild chooseNotification(word)
   })
 
   lazy val template = div(
-    UdashPageHeader(h1(t(Translations.sections.machine), small(t(Translations.sections.machineDesc)))).render,
+    UdashPageHeader(h1(t(sections.machine), small(t(sections.machineDesc)))).render,
     div(BootstrapStyles.row)(
       div(Grid.colMd4)(
-        h3(t(Translations.definition.title)),
+        h3(t(definition.title)),
         code(bind(DFAService.Definition.definition)),
         hr,
         UdashInputGroup.input(TextInput.debounced(input).render),

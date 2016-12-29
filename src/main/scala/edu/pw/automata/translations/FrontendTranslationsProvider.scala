@@ -26,7 +26,13 @@ object FrontendTranslationsProvider {
       "transitions" -> "Transitions",
 
       "defTitle" -> "Definition",
-      "diagramTitle" -> "Diagram"
+      "diagramTitle" -> "Diagram",
+
+      "addAccepting" -> "Accepting",
+
+      "aYes" -> "Accepts",
+      "aNo" -> "Doesn't accept",
+      "aError" -> "Error"
     )),
     Lang("pl") -> Bundle(BundleHash("plHash"), Map(
       "add" -> "Dodaj",
@@ -48,7 +54,13 @@ object FrontendTranslationsProvider {
       "transitions" -> "Przejścia",
 
       "defTitle" -> "Definicja",
-      "diagramTitle" -> "Diagram"
+      "diagramTitle" -> "Diagram",
+
+      "addAccepting" -> "Kończący",
+
+      "aYes" -> "Akceptuje",
+      "aNo" -> "Nie akceptuje",
+      "aError" -> "Błąd"
     ))
   )
 

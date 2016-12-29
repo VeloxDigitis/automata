@@ -31,6 +31,13 @@ object Translations {
     val states = key("states")
     val alphabet = key("alphabet")
     val transitions = key("transitions")
+    val addAccepting = key("addAccepting")
+
+    object accepting {
+      val yes = key("aYes")
+      val no = key("aNo")
+      val error = key("aError")
+    }
   }
 
   object definition {

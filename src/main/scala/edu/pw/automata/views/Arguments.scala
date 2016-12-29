@@ -2,7 +2,7 @@ package edu.pw.automata.views
 
 import edu.pw.automata.DFAService
 import edu.pw.automata.fsm.ExistingStatesValidator
-import edu.pw.automata.translations.Translations
+import edu.pw.automata.translations.Translations._
 import io.udash._
 import io.udash.bootstrap.BootstrapStyles
 import io.udash.bootstrap.BootstrapStyles.Grid
@@ -19,7 +19,7 @@ import scalatags.JsDom.all._
 
 class Arguments extends Section with TranslatedView{
 
-  lazy val demoBtn = UdashButton(disabled = Property(true))(t(Translations.sections.example))
+  lazy val demoBtn = UdashButton(disabled = Property(true))(t(sections.example))
 
   demoBtn.listen{case e => {
     DFAService.loadDemo()
@@ -27,10 +27,10 @@ class Arguments extends Section with TranslatedView{
   }}
 
   lazy val header = div()(
-    UdashPageHeader(h1(t(Translations.sections.args), small(t(Translations.sections.argsDesc)))).render,
+    UdashPageHeader(h1(t(sections.args), small(t(sections.argsDesc)))).render,
     UdashButtonGroup()(
-      UdashButton()(t(Translations.sections.load)).render,
-      UdashButton()(t(Translations.sections.save)).render,
+      UdashButton()(t(sections.load)).render,
+      UdashButton()(t(sections.save)).render,
       demoBtn.render
     ).render
   )
@@ -41,7 +41,7 @@ class Arguments extends Section with TranslatedView{
   var notifications = div().render
 
   lazy val currentStateName = Property[String]("")
-  lazy val addStateBtn = UdashButton(ButtonStyle.Primary, block = true)(t(Translations.add))
+  lazy val addStateBtn = UdashButton(ButtonStyle.Primary, block = true)(t(add))
 
   addStateBtn.listen{case e => {
     val c = currentStateName.get
@@ -51,7 +51,7 @@ class Arguments extends Section with TranslatedView{
   }}
 
   lazy val currentSymbolName = Property[String]("")
-  lazy val addSymbolBtn = UdashButton(ButtonStyle.Primary, block = true)(t(Translations.add))
+  lazy val addSymbolBtn = UdashButton(ButtonStyle.Primary, block = true)(t(add))
 
   addSymbolBtn.listen{case e => {
     val c = currentSymbolName.get
@@ -68,7 +68,10 @@ class Arguments extends Section with TranslatedView{
 
   def createRows(el: Seq[String]): Element = {
     val row = tr().render
-    row.appendChild(td(el(0)).render)
+
+    val accept = UdashButton(ButtonStyle.Link)(t(fsa.addAccepting))
+    accept.listen{case _ => {DFAService.addAccepting(el(0))}}
+    row.appendChild(td(el(0), accept.render).render)
 
     for(i <- 1 to el.size - 1) {
       val input = Property[String]
@@ -103,13 +106,13 @@ class Arguments extends Section with TranslatedView{
       div(Grid.colMd4)(
         div(BootstrapStyles.row)(
           div(Grid.colMd6)(
-            h3(t(Translations.fsa.states)),
+            h3(t(fsa.states)),
             UdashListGroup(DFAService.Definition.stateNames)((t) => li(bind(t)).render).render,
             UdashInputGroup.input(TextInput.debounced(currentStateName).render),
             addStateBtn.render
           ),
           div(Grid.colMd6)(
-            h3(t(Translations.fsa.alphabet)),
+            h3(t(fsa.alphabet)),
             UdashListGroup(DFAService.Definition.alphabetNames)((t) => li(bind(t)).render).render,
             UdashInputGroup.input(TextInput.debounced(currentSymbolName).render),
             addSymbolBtn.render
@@ -117,14 +120,12 @@ class Arguments extends Section with TranslatedView{
         )
       ),
       div(Grid.colMd8)(
-        h3(t(Translations.fsa.transitions)),
+        h3(t(fsa.transitions)),
         transitions,
         notifications
       )
     )
   )
-
-  //DFAService.addState("XD")
 
   override def getTemplate(): Element = template.render
 }
