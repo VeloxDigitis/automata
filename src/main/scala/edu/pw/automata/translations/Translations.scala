@@ -7,7 +7,10 @@ import scala.concurrent.ExecutionContext.Implicits.global
 
 object Translations {
 
+
   val lang = Property(Lang("pl"))
+
+  val changeLang = key("changeLang")
 
   val add = key("add")
 
