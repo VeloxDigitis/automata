@@ -7,6 +7,7 @@ object FrontendTranslationsProvider {
 
   private val translations = Map(
     Lang("en") -> Bundle(BundleHash("enHash"), Map(
+      "changeLang" -> "Change language",
       "add" -> "Add",
       "isWrong" -> "is invalid",
 
@@ -37,6 +38,7 @@ object FrontendTranslationsProvider {
       "aError" -> "Error"
     )),
     Lang("pl") -> Bundle(BundleHash("plHash"), Map(
+      "changeLang" -> "Zmień język",
       "add" -> "Dodaj",
       "isWrong" -> "zawiera blad",
 

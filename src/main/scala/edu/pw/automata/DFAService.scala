@@ -63,11 +63,12 @@ object DFAService {
     s.isDefined
   }
 
-  def loadDemo() = dfa = DFADemo.get()
+  def loadDemo() = (dfa = DFADemo.get())
 
   def reload() {
     Definition.stateNames.set(dfa.getStates.map(_.toString).toSeq)
     Definition.alphabetNames.set(dfa.getAlphabet.map(_.toString).toSeq)
+    Definition.transitions.set(dfa.getStates.toSeq.map(state => {state.toString :: dfa.getAlphabet.toList.map(a => dfa.move(a, Some(state)).getOrElse("").toString)}))
   }
 
   object Definition {

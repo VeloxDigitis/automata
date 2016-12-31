@@ -19,16 +19,12 @@ class Navbar extends Section with TranslatedView{
 
   val panels = SeqProperty[Panel](
     DefaultPanel("Arguments", "#args"),
-    DefaultPanel("Definition", "#definition")
+    DefaultPanel("Definition", "#diagram-main")
   )
 
   lazy val navbar = UdashNavbar.inverted(
     div(BootstrapStyles.Navigation.navbarBrand)(t(Translations.fsa.fsa)).render,
-    UdashNav.navbar(panels)(
-      elemFactory = (panel) => a(panel.get.title, href := "").render,
-      isActive = (el) => el.transform(_.title.endsWith("1")),
-      isDisabled = (el) => el.transform(_.title.endsWith("5"))
-    )
+    UdashNav.navbar(panels)(elemFactory = (panel) => a(panel.get.title, href := panel.get.content).render)
   )
 
   override def getTemplate(): Element = navbar.render

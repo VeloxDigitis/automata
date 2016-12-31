@@ -56,6 +56,7 @@ class FSM(Q:   States,
 
   def getStates = Q
   def getAlphabet = Σ
+  def getQ0 = q0
 
   def getDelta() = δ
 

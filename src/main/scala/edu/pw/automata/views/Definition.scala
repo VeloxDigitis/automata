@@ -1,6 +1,7 @@
 package edu.pw.automata.views
 
 import edu.pw.automata.DFAService
+import edu.pw.automata.diagram.Controller
 import edu.pw.automata.translations.Translations._
 import io.udash.bootstrap.BootstrapStyles
 import io.udash.bootstrap.BootstrapStyles.Grid
@@ -31,6 +32,7 @@ class Definition extends Section with TranslatedView{
 
   input.listen(word => {
     notifications.innerHTML = ""
+    Controller.setInput(word)
     notifications appendChild chooseNotification(word)
   })
 

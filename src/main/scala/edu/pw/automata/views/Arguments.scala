@@ -1,6 +1,7 @@
 package edu.pw.automata.views
 
 import edu.pw.automata.DFAService
+import edu.pw.automata.diagram.Controller
 import edu.pw.automata.fsm.ExistingStatesValidator
 import edu.pw.automata.translations.Translations._
 import io.udash.{produce, _}
@@ -19,11 +20,13 @@ import scalatags.JsDom.all._
 
 class Arguments extends Section with TranslatedView{
 
-  lazy val demoBtn = UdashButton(disabled = Property(true))(t(sections.example))
+  lazy val demoBtn = UdashButton(disabled = Property(false))(t(sections.example))
 
-  demoBtn.listen{case e => {
+  demoBtn.listen{case _ => {
     DFAService.loadDemo()
     DFAService.reload()
+    reloadTable()
+    starting.set(DFAService.dfa.getQ0.getOrElse("").toString)
   }}
 
   lazy val header = div()(
@@ -36,7 +39,7 @@ class Arguments extends Section with TranslatedView{
   )
 
   val transitions = div().render
-  val columns = tr(th(b("#"))).render
+  val columns = tr().render
 
   var notifications = div().render
 
@@ -71,11 +74,20 @@ class Arguments extends Section with TranslatedView{
     sNotifications.innerHTML = ""
     if(!DFAService.setStarting(e))
       sNotifications.appendChild(UdashAlert.danger(e + " is invalid!").render)
+    if(Controller.current.isEmpty)
+      Controller.current = DFAService.dfa.getQ0
   })
 
   def reloadTable() = {
+    reloadColumns()
     transitions.innerHTML = ""
     transitions.appendChild(table().render)
+  }
+
+  def reloadColumns() = {
+    columns.innerHTML = ""
+    columns.appendChild(th(b("#")).render)
+    DFAService.Definition.alphabetNames.get.foreach(a => columns.appendChild(th(b(a.toString)).render))
   }
 
   def createRows(el: Seq[String]): Element = {
@@ -85,8 +97,8 @@ class Arguments extends Section with TranslatedView{
     accept.listen{case _ => {DFAService.addAccepting(el(0))}}
     row.appendChild(td(el(0), accept.render).render)
 
-    for(i <- 1 to el.size - 1) {
-      val input = Property[String]
+    for(i <- 1 until el.size) {
+      val input = Property[String](DFAService.Definition.transitions.get.filter(_.head == el.head).head(i))
 
       val not = UdashAlert.danger(produce(input)(v => b(v + " is invalid!").render)).render
 
