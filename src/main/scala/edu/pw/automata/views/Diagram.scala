@@ -23,7 +23,7 @@ class Diagram extends Section with TranslatedView{
 
   stop.listen {
     case _ => {
-      Controller.stop()
+      Controller.reset()
       GraphService.repaint()
     }
   }

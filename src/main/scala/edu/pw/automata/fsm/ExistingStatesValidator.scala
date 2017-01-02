@@ -8,7 +8,7 @@ import scala.concurrent.{ExecutionContext, Future}
 class ExistingStatesValidator extends Validator[String]{
 
   def apply(name: String)(implicit ec: ExecutionContext): Future[ValidationResult] = Future {
-      if (DFAService.dfa.getStates.map(_.toString).contains(name)) Valid
-      else Invalid("There is no such state!")
+    if (DFAService.dfa.getStates.map(_.toString).contains(name)) Valid
+    else Invalid("There is no such state!")
   }
 }

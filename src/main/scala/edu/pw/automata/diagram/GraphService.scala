@@ -5,6 +5,8 @@ import io.udash.wrappers.jquery._
 
 object GraphService {
 
+  val startingStyle = "[fillcolor = cyan, style=filled];"
+
   def repaint() = {
 
     jQ("#diagram-main").empty()
@@ -17,10 +19,10 @@ object GraphService {
       "node [shape = doublecircle];" + accepting.mkString(" ") + {if(accepting.isEmpty) ("") else (";")} +
       "node [shape = circle];")
 
-    dfa.getDelta.foreach(e => s.append(e.a.toString + " -> " + e.b.toString + " [ label = \"" + e.symbol.toString() + "\" ];"))
+    dfa.getDelta.foreach(e => s.append(s"${e.a.toString} -> ${e.b.toString} [ label =" + "\"" + e.symbol.toString + "\"];"))
 
-    if(Controller.current.isDefined)
-      s.append(Controller.current.get.toString + " [fillcolor = cyan, style=filled];")
+    if(Controller.current.isDefined || DFAService.dfa.getQ0.isDefined)
+      s.append(s"${Controller.current.getOrElse(DFAService.dfa.getQ0.get).toString} $startingStyle")
 
     s.append("}")
 

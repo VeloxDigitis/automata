@@ -2,46 +2,22 @@ package edu.pw.automata.views
 
 import edu.pw.automata.DFAService
 import edu.pw.automata.diagram.Controller
-import edu.pw.automata.fsm.ExistingStatesValidator
 import edu.pw.automata.translations.Translations._
-import io.udash.{produce, _}
+import io.udash._
 import io.udash.bootstrap.BootstrapStyles
 import io.udash.bootstrap.BootstrapStyles.Grid
 import io.udash.bootstrap.alert.UdashAlert
-import io.udash.bootstrap.button.{ButtonStyle, UdashButton, UdashButtonGroup}
+import io.udash.bootstrap.button.{ButtonStyle, UdashButton}
 import io.udash.bootstrap.form.UdashInputGroup
-import io.udash.bootstrap.table.UdashTable
-import io.udash.bootstrap.utils.{UdashListGroup, UdashPageHeader}
+import io.udash.bootstrap.utils.UdashListGroup
 import org.scalajs.dom.Element
 
 import scala.concurrent.ExecutionContext.Implicits.global
-import scala.util.{Failure, Success}
 import scalatags.JsDom.all._
 
 class Arguments extends Section with TranslatedView{
 
-  lazy val demoBtn = UdashButton(disabled = Property(false))(t(sections.example))
-
-  demoBtn.listen{case _ => {
-    DFAService.loadDemo()
-    DFAService.reload()
-    reloadTable()
-    starting.set(DFAService.dfa.getQ0.getOrElse("").toString)
-  }}
-
-  lazy val header = div()(
-    UdashPageHeader(h1(t(sections.args), small(t(sections.argsDesc)))).render,
-    UdashButtonGroup()(
-      UdashButton()(t(sections.load)).render,
-      UdashButton()(t(sections.save)).render,
-      demoBtn.render
-    ).render
-  )
-
-  val transitions = div().render
-  val columns = tr().render
-
-  var notifications = div().render
+  val header = new ArgumentsHeader(this)
 
   lazy val currentStateName = Property[String]("")
   lazy val addStateBtn = UdashButton(ButtonStyle.Primary, block = true)(t(add))
@@ -49,7 +25,7 @@ class Arguments extends Section with TranslatedView{
   addStateBtn.listen{case _ => {
     val c = currentStateName.get
     DFAService.addState(if(c == "") None else Some(c))
-    reloadTable()
+    table.reloadTable()
 
     currentStateName.set("")
   }}
@@ -61,8 +37,8 @@ class Arguments extends Section with TranslatedView{
     val c = currentSymbolName.get
 
     DFAService.addSymbol(if(c == "") None else Some(c))
-    columns.appendChild(th(b(DFAService.Definition.alphabetNames.get.last.toString)).render)
-    reloadTable()
+    table.columns.appendChild(th(b(DFAService.Definition.alphabetNames.get.last.toString)).render)
+    table.reloadTable()
 
     currentSymbolName.set("")
   }}
@@ -78,56 +54,10 @@ class Arguments extends Section with TranslatedView{
       Controller.current = DFAService.dfa.getQ0
   })
 
-  def reloadTable() = {
-    reloadColumns()
-    transitions.innerHTML = ""
-    transitions.appendChild(table().render)
-  }
-
-  def reloadColumns() = {
-    columns.innerHTML = ""
-    columns.appendChild(th(b("#")).render)
-    DFAService.Definition.alphabetNames.get.foreach(a => columns.appendChild(th(b(a.toString)).render))
-  }
-
-  def createRows(el: Seq[String]): Element = {
-    val row = tr().render
-
-    val accept = UdashButton(ButtonStyle.Link)(t(fsa.addAccepting))
-    accept.listen{case _ => {DFAService.addAccepting(el(0))}}
-    row.appendChild(td(el(0), accept.render).render)
-
-    for(i <- 1 until el.size) {
-      val input = Property[String](DFAService.Definition.transitions.get.filter(_.head == el.head).head(i))
-
-      val not = UdashAlert.danger(produce(input)(v => b(v + " is invalid!").render)).render
-
-      input.addValidator(new ExistingStatesValidator)
-      input.listen{e => input.isValid.onComplete {
-
-          case Success(Valid) => {
-            DFAService.setTransition(el(0), DFAService.Definition.alphabetNames.get(i - 1), e)
-            notifications.removeChild(not)
-          }
-
-          case Success(Invalid(_)) => notifications.appendChild(not)
-          case Failure(_) => println("Something gone wrong")
-        }
-      }
-
-      row.appendChild(td(UdashInputGroup.input(TextInput.debounced(input).render)).render)
-    }
-
-    row
-  }
-
-  def table() = UdashTable(Property(true), Property(true), Property(true), Property(true))(DFAService.Definition.transitions)(
-    headerFactory = Some(() => columns),
-    rowFactory = el => createRows(el.get)
-  )
+  val table = new TransitionsTable()
 
   lazy val template = div(
-    header,
+    header.getTemplate(),
     div(BootstrapStyles.row)(
       div(Grid.colMd4)(
         div(BootstrapStyles.row)(
@@ -151,8 +81,8 @@ class Arguments extends Section with TranslatedView{
       ),
       div(Grid.colMd8)(
         h3(t(fsa.transitions)),
-        transitions,
-        notifications
+        table.transitions,
+        table.notifications
       )
     )
   )

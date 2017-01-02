@@ -20,6 +20,7 @@ object FrontendTranslationsProvider {
       "load" -> "Load from disc",
       "save" -> "Save",
       "example" -> "Load example",
+      "reset" -> "Reset",
 
       "fsa" -> "Finite state automata",
       "states" -> "States",
@@ -51,6 +52,7 @@ object FrontendTranslationsProvider {
       "load" -> "Wczytaj z dysku",
       "save" -> "Zapisz na dysk",
       "example" -> "Wczytaj demo",
+      "reset" -> "Reset",
 
       "fsa" -> "Automat skończony",
       "states" -> "Stany",

@@ -23,6 +23,7 @@ object Translations {
     val load = key("load")
     val save = key("save")
     val example = key("example")
+    val reset = key("reset")
 
     val machine = key("machine")
     val machineDesc = key("machineDesc")

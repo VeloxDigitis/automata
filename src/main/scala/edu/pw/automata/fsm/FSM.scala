@@ -62,7 +62,7 @@ class FSM(Q:   States,
 
   def stateFromString(name: String) = Q.find(_.toString == name)
 
-  def symbolFromString(name: String) = Σ.find(_.name == name)
+  def symbolFromString(name: String) = Σ.find(_.toString == name)
 
   def size = Q.size
   def alphabetSize = Σ.size

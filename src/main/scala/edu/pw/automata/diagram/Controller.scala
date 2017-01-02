@@ -6,23 +6,22 @@ import edu.pw.automata.fsm.State
 object Controller {
 
   var input = ""
-  var currentInputPosition = 0
+  var currentInputPosition = 1
   var current: Option[State] = None
 
   def setInput(word: String) = (input = word)
 
-  def move() = {
-    println(current.getOrElse("").toString)
-
-    if(currentInputPosition < input.length) {
+  def move(): Unit = {
+    if(currentInputPosition <= input.length) {
       current = DFAService.dfa.move(input.substring(0, currentInputPosition))
       currentInputPosition += 1
     } else
-      stop()
+      reset()
   }
 
-  def stop() = {
+  def reset() = {
     currentInputPosition = 0
+    move()
   }
 
 }
