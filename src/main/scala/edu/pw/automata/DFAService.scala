@@ -24,8 +24,9 @@ object DFAService {
 
   def addSymbol(name: Option[String]) = {
     val s = name.getOrElse(dfa.alphabetSize + "")
-    dfa = dfa.addSymbol(Symbol(s)).toDFA()
-    Definition.alphabetNames.append(s)
+    val symbol = Symbol(s)
+    dfa = dfa.addSymbol(symbol).toDFA()
+    Definition.alphabetNames.append(symbol.toString())
 
     val t = Definition.transitions
     t.set(t.get.map(e => e :+ e.head))
@@ -84,6 +85,7 @@ object DFAService {
     alphabetNames.listen(_ => reload)
 
     def reload = {
+      println(alphabetNames.get.map(_.toString) + " " + dfa.getAlphabet.map(_.toString))
       definition.set(dfa.toString)
       GraphService.repaint()
     }

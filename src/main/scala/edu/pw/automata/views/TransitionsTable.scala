@@ -48,17 +48,18 @@ class TransitionsTable extends TranslatedView{
       val not = UdashAlert.danger(produce(input)(v => b(v + " is invalid!").render)).render
 
       input.addValidator(new ExistingStatesValidator)
-      input.listen{e => input.isValid.onComplete {
 
+      def setTransition() = input.isValid.onComplete {
         case Success(Valid) => {
-          DFAService.setTransition(el(0), DFAService.Definition.alphabetNames.get(i - 1), e)
+          DFAService.setTransition(el(0), DFAService.Definition.alphabetNames.get(i - 1), input.get)
           notifications.removeChild(not)
         }
-
         case Success(Invalid(_)) => notifications.appendChild(not)
         case Failure(_) => println("Something gone wrong")
       }
-      }
+
+      setTransition()
+      input.listen{_ => setTransition()}
 
       row.appendChild(td(UdashInputGroup.input(TextInput.debounced(input).render)).render)
     }
