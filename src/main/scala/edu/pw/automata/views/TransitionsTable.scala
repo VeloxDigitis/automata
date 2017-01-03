@@ -52,7 +52,7 @@ class TransitionsTable extends TranslatedView{
       def setTransition() = input.isValid.onComplete {
         case Success(Valid) => {
           DFAService.setTransition(el(0), DFAService.Definition.alphabetNames.get(i - 1), input.get)
-          notifications.removeChild(not)
+          try{notifications.removeChild(not)} catch {case _: Exception => ()}
         }
         case Success(Invalid(_)) => notifications.appendChild(not)
         case Failure(_) => println("Something gone wrong")

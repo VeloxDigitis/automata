@@ -74,18 +74,16 @@ object DFAService {
 
   object Definition {
 
-    val definition = Property[String](dfa.toString)
+    val definition    = Property[String](dfa.toString)
 
-    val stateNames = SeqProperty[String]
+    val stateNames    = SeqProperty[String]
     val alphabetNames = SeqProperty[String]
-
-    val transitions = SeqProperty[Seq[String]]
+    val transitions   = SeqProperty[Seq[String]]
 
     stateNames.listen(_ => reload)
     alphabetNames.listen(_ => reload)
 
     def reload = {
-      println(alphabetNames.get.map(_.toString) + " " + dfa.getAlphabet.map(_.toString))
       definition.set(dfa.toString)
       GraphService.repaint()
     }
