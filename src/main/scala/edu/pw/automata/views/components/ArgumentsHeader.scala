@@ -1,9 +1,10 @@
-package edu.pw.automata.views
+package edu.pw.automata.views.components
+
 import edu.pw.automata.DFAService
-import edu.pw.automata.diagram.{Controller, GraphService}
 import edu.pw.automata.fsm.DFA
 import edu.pw.automata.translations.Translations.sections._
-import io.udash.Property
+import edu.pw.automata.views.TranslatedView
+import edu.pw.automata.views.sections.{Arguments, Section}
 import io.udash.bootstrap.button.{UdashButton, UdashButtonGroup}
 import io.udash.bootstrap.utils.UdashPageHeader
 import org.scalajs.dom.Element

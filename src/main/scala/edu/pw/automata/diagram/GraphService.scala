@@ -1,6 +1,6 @@
 package edu.pw.automata.diagram
 
-import edu.pw.automata.{DFAService, DOMGlobalScope}
+import edu.pw.automata.DFAService
 import io.udash.wrappers.jquery._
 
 object GraphService {

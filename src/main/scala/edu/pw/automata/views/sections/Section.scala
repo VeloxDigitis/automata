@@ -1,4 +1,4 @@
-package edu.pw.automata.views
+package edu.pw.automata.views.sections
 
 import org.scalajs.dom.Element
 

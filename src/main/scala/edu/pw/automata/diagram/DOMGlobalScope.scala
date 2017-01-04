@@ -1,4 +1,4 @@
-package edu.pw.automata
+package edu.pw.automata.diagram
 
 import org.scalajs.dom.raw.HTMLImageElement
 

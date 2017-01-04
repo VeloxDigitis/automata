@@ -1,19 +1,19 @@
-package edu.pw.automata.views
+package edu.pw.automata.views.components
 
 import edu.pw.automata.DFAService
 import edu.pw.automata.fsm.ExistingStatesValidator
 import edu.pw.automata.translations.Translations.fsa
-import io.udash.{Property, TextInput, Valid}
+import edu.pw.automata.views.TranslatedView
 import io.udash.bootstrap.alert.UdashAlert
 import io.udash.bootstrap.button.{ButtonStyle, UdashButton}
 import io.udash.bootstrap.form.UdashInputGroup
 import io.udash.bootstrap.table.UdashTable
 import io.udash.properties.Invalid
+import io.udash.{Property, TextInput, Valid, _}
 import org.scalajs.dom.Element
-import scala.util.{Failure, Success}
 
 import scala.concurrent.ExecutionContext.Implicits.global
-import io.udash._
+import scala.util.{Failure, Success}
 import scalatags.JsDom.all._
 
 class TransitionsTable extends TranslatedView{

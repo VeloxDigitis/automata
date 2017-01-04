@@ -1,18 +1,20 @@
-package edu.pw.automata.views
+package edu.pw.automata.views.sections
 
 import edu.pw.automata.DFAService
 import edu.pw.automata.diagram.Controller
 import edu.pw.automata.translations.Translations._
+import edu.pw.automata.views.TranslatedView
+import edu.pw.automata.views.components.Diagram
+import io.udash._
 import io.udash.bootstrap.BootstrapStyles
 import io.udash.bootstrap.BootstrapStyles.Grid
-import io.udash.bootstrap.utils.UdashPageHeader
-import org.scalajs.dom.Element
-import io.udash._
 import io.udash.bootstrap.alert.UdashAlert
 import io.udash.bootstrap.form.UdashInputGroup
+import io.udash.bootstrap.utils.UdashPageHeader
+import org.scalajs.dom.Element
 
-import scalatags.JsDom.all._
 import scala.concurrent.ExecutionContext.Implicits.global
+import scalatags.JsDom.all._
 
 class Definition extends Section with TranslatedView{
 

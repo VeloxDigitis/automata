@@ -1,15 +1,17 @@
-package edu.pw.automata.views
+package edu.pw.automata.views.components
 
 import edu.pw.automata.diagram.{Controller, GraphService}
 import edu.pw.automata.translations.Translations
+import edu.pw.automata.views.TranslatedView
+import edu.pw.automata.views.sections.Section
+import io.udash._
 import io.udash.bootstrap.button.{UdashButton, UdashButtonGroup}
 import io.udash.properties.single.Property
-import io.udash._
 import org.scalajs.dom
 import org.scalajs.dom.Element
 
-import scalatags.JsDom.all._
 import scala.concurrent.ExecutionContext.Implicits.global
+import scalatags.JsDom.all._
 
 class Diagram extends Section with TranslatedView{
 

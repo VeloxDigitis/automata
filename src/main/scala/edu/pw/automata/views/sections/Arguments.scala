@@ -1,8 +1,10 @@
-package edu.pw.automata.views
+package edu.pw.automata.views.sections
 
 import edu.pw.automata.DFAService
 import edu.pw.automata.diagram.Controller
 import edu.pw.automata.translations.Translations._
+import edu.pw.automata.views.TranslatedView
+import edu.pw.automata.views.components.{ArgumentsHeader, TransitionsTable}
 import io.udash._
 import io.udash.bootstrap.BootstrapStyles
 import io.udash.bootstrap.BootstrapStyles.Grid

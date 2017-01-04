@@ -1,12 +1,15 @@
-package edu.pw.automata.views
+package edu.pw.automata.views.components
+
 import edu.pw.automata.translations.Translations
+import edu.pw.automata.views.TranslatedView
+import edu.pw.automata.views.sections.Section
 import io.udash.bootstrap.BootstrapStyles
 import io.udash.bootstrap.navs.{UdashNav, UdashNavbar}
 import io.udash.properties.seq.SeqProperty
 import org.scalajs.dom.Element
 
-import scalatags.JsDom.all._
 import scala.concurrent.ExecutionContext.Implicits.global
+import scalatags.JsDom.all._
 
 trait Panel {
   def title: String

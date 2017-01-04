@@ -1,6 +1,8 @@
 package edu.pw.automata.views
 
 import edu.pw.automata.translations.Translations
+import edu.pw.automata.views.components.Navbar
+import edu.pw.automata.views.sections.{Arguments, Definition}
 import io.udash.bootstrap.button.UdashButton
 import io.udash.i18n.Lang
 import org.scalajs.dom.Element
