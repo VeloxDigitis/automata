@@ -4,7 +4,7 @@ name          := "Automata"
 organization  := "pw.edu"
 scalaVersion  := "2.11.8"
 
-version       := "0.3.1-SNAPSHOT"
+version       := "0.6-SNAPSHOT"
 
 enablePlugins(ScalaJSPlugin, WorkbenchPlugin)
 
