@@ -8,8 +8,11 @@ class FSM(Q:   States,
           q0:  Option[State],
           F:   States) {
 
-  implicit def fsmFromTuple(t: (States, Alphabet, Delta, Option[State], States)): FSM
+  implicit def FSMFromTuple(t: (States, Alphabet, Delta, Option[State], States)): FSM
                                   = new FSM(t._1, t._2, t._3, t._4, t._5)
+
+
+  def toDFA() = new DFA(Q, Σ, δ, q0, F)
 
   def isNFA = δ.groupBy(e => (e.a, e.symbol)).values.exists(_.size > 1)
 
@@ -51,6 +54,25 @@ class FSM(Q:   States,
       "F" -> F
     )
 
+  def getStates = Q
+  def getAlphabet = Σ
+  def getQ0 = q0
+
+  def getDelta() = δ
+
+  def stateFromString(name: String) = Q.find(_.toString == name)
+
+  def symbolFromString(name: String) = Σ.find(_.toString == name)
+
+  def size = Q.size
+  def alphabetSize = Σ.size
+
   override def toString = definition.map(e => s"${e._1} => {${e._2.mkString(",")}}").mkString("\n")
+
+}
+
+object FSM {
+
+  def empty() = new FSM(Set.empty, Set.empty, Set.empty, None, Set.empty)
 
 }

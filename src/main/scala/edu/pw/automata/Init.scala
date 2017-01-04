@@ -1,30 +1,16 @@
 package edu.pw.automata
 
-import edu.pw.automata.graph.GraphService
+import edu.pw.automata.views.Index
+import io.udash.wrappers.jquery._
 import org.scalajs.dom._
-import org.scalajs.jquery._
 
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSExport
-import scalatags.JsDom.all._
 
 @JSExport
 object Init extends js.JSApp{
 
   @JSExport
-  def main(): Unit = {
+  def main(): Unit = jQ(() ⇒ Index.render(document.getElementById("application")))
 
-    val app = document.getElementById("application")
-
-	  app.appendChild(
-      h1("Hello, world!").render
-    )
-
-    jQuery(document)
-
-    jQuery(document).ready{
-      GraphService.go()
-    }
-
-  }
 }
