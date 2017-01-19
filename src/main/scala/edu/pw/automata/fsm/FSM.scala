@@ -2,6 +2,8 @@ package edu.pw.automata.fsm;
 
 import Types._
 
+import scala.collection.mutable
+
 class FSM(Q:   States,
           Σ:   Alphabet,
           δ:   Delta,
@@ -46,7 +48,7 @@ class FSM(Q:   States,
     case _ =>                 this
   }
 
-  def definition = Map[String, Iterable[Any]](
+  def definition = mutable.LinkedHashMap[String, Iterable[Any]](
       "Q" -> Q,
       "Σ" -> Σ,
       "δ" -> δ,
