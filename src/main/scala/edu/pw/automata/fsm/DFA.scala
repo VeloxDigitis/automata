@@ -36,6 +36,8 @@ class DFA(Q:   States,
     move(word, q0)
   }
 
+  def hasDelta(symbol: Symbol, s: State) = δ.exists(p => p.a == s && p.symbol == symbol)
+
 }
 
 object DFA {

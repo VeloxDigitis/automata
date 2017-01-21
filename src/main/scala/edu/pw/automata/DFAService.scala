@@ -33,11 +33,24 @@ object DFAService {
   }
 
   def setTransition(state: String, input: String, state2: String) = {
-    val from  = dfa.stateFromString(state)
-    val symbol = dfa.symbolFromString(input)
-    val to    = dfa.stateFromString(state2)
 
-    dfa = dfa.addDelta(new DeltaFunction(from.get, symbol.get, to.get)).toDFA()
+    val from = dfa.stateFromString(state)
+    val symbol = dfa.symbolFromString(input)
+
+    if(state2.isEmpty) {
+      dfa = dfa.removeDelta(dfa.getDelta().filter(p => p.a == from.get && p.symbol == symbol.get).head).toDFA()
+      var i = 0
+      var j = 0
+
+      while(Definition.transitions.get(i)(0) != from.get.toString)
+        i = i + 1
+
+      while(Definition.alphabetNames.get(j) != symbol.get.toString)
+        j = j + 1
+
+      Definition.transitions.replace(i, 1, Definition.transitions.get(i).updated(j + 1, ""))
+    } else
+      dfa = dfa.addDelta(new DeltaFunction(from.get, symbol.get, dfa.stateFromString(state2).get)).toDFA()
 
     Definition.reload
   }
@@ -64,12 +77,18 @@ object DFAService {
     s.isDefined
   }
 
-  def loadDemo() = (dfa = DFADemo.get())
+  def loadDemo() = dfa = DFADemo.get()
 
   def reload() {
     Definition.stateNames.set(dfa.getStates.map(_.toString).toSeq)
     Definition.alphabetNames.set(dfa.getAlphabet.map(_.toString).toSeq)
-    Definition.transitions.set(dfa.getStates.toSeq.map(state => {state.toString :: dfa.getAlphabet.toList.map(a => dfa.move(a, Some(state)).getOrElse("").toString)}))
+    Definition.transitions.set(dfa.getStates.toSeq.map(state => {
+      state.toString :: dfa.getAlphabet.toList.map( a =>
+        if(dfa.hasDelta(a, state)) {
+          dfa.move(a, Some(state)).getOrElse("").toString
+        } else ""
+      )
+    }))
   }
 
   object Definition {
@@ -80,8 +99,8 @@ object DFAService {
     val alphabetNames = SeqProperty[String]
     val transitions   = SeqProperty[Seq[String]]
 
-    stateNames.listen(_ => reload)
-    alphabetNames.listen(_ => reload)
+    //stateNames.listen(_ => reload)
+    //alphabetNames.listen(_ => reload)
 
     def reload = {
       definition.set(dfa.toString)

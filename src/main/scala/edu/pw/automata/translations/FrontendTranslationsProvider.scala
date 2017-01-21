@@ -68,7 +68,7 @@ object FrontendTranslationsProvider {
 
       "aYes" -> "Akceptuje",
       "aNo" -> "Nie akceptuje",
-      "aError" -> "Błąd"
+      "aError" -> "Brak zdefiniowanego zachowania!"
     ))
   )
 
