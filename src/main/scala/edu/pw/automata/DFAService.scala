@@ -19,7 +19,7 @@ object DFAService {
     if(dfa.size == 1)
       dfa = dfa.setInitial(s).toDFA()
 
-    Definition.transitions.append(Seq.fill(Definition.alphabetNames.size + 1)(s.toString))
+    Definition.transitions.append(s.toString :: Seq.fill(Definition.alphabetNames.size)("").toList)
   }
 
   def addSymbol(name: Option[String]) = {
@@ -29,7 +29,7 @@ object DFAService {
     Definition.alphabetNames.append(symbol.toString())
 
     val t = Definition.transitions
-    t.set(t.get.map(e => e :+ e.head))
+    t.set(t.get.map(e => e :+ ""))
   }
 
   def setTransition(state: String, input: String, state2: String) = {
@@ -38,17 +38,22 @@ object DFAService {
     val symbol = dfa.symbolFromString(input)
 
     if(state2.isEmpty) {
-      dfa = dfa.removeDelta(dfa.getDelta().filter(p => p.a == from.get && p.symbol == symbol.get).head).toDFA()
-      var i = 0
-      var j = 0
 
-      while(Definition.transitions.get(i)(0) != from.get.toString)
-        i = i + 1
+      val removed = dfa.getDelta().find(p => p.a == from.get && p.symbol == symbol.get)
 
-      while(Definition.alphabetNames.get(j) != symbol.get.toString)
-        j = j + 1
+      if(removed.isDefined) {
+        dfa = dfa.removeDelta(removed.get).toDFA()
+        var i = 0
+        var j = 0
 
-      Definition.transitions.replace(i, 1, Definition.transitions.get(i).updated(j + 1, ""))
+        while (Definition.transitions.get(i)(0) != from.get.toString)
+          i = i + 1
+
+        while (Definition.alphabetNames.get(j) != symbol.get.toString)
+          j = j + 1
+
+        Definition.transitions.replace(i, 1, Definition.transitions.get(i).updated(j + 1, ""))
+      }
     } else
       dfa = dfa.addDelta(new DeltaFunction(from.get, symbol.get, dfa.stateFromString(state2).get)).toDFA()
 
