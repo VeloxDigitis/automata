@@ -48,7 +48,7 @@ class Definition extends Section with TranslatedView{
         UdashInputGroup.input(TextInput.debounced(input).render),
         notifications
       ),
-      div(Grid.colMd8)(new Diagram().getTemplate())
+      div(Grid.colMd8)(new Diagram(this).getTemplate())
     )
   )
 

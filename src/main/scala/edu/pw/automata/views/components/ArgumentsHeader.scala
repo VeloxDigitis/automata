@@ -19,7 +19,7 @@ class ArgumentsHeader(arguments: Arguments) extends Section with TranslatedView 
   demoBtn.listen{case _ => {
     DFAService.loadDemo()
 
-    DFAService.reloadT("DEMO")
+    DFAService.reloadT()
     arguments.table.reloadTable()
     arguments.starting.set(DFAService.dfa.getQ0.getOrElse("").toString) //TODO
   }}
@@ -28,7 +28,7 @@ class ArgumentsHeader(arguments: Arguments) extends Section with TranslatedView 
 
   resetBtn.listen{case _ => {
     DFAService.dfa = DFA.empty()
-    DFAService.reloadT("RESET")
+    DFAService.reloadT()
     arguments.table.reloadTable()
     arguments.starting.set("")
   }}
