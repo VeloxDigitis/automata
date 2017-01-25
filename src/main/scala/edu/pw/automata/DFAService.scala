@@ -37,27 +37,32 @@ object DFAService {
     val from = dfa.stateFromString(state)
     val symbol = dfa.symbolFromString(input)
 
+    var i = 0
+    var j = 0
+
+    while (Definition.transitions.get(i)(0) != from.get.toString)
+      i = i + 1
+
+    while (Definition.alphabetNames.get(j) != symbol.get.toString)
+      j = j + 1
+
     if(state2.isEmpty) {
 
       val removed = dfa.getDelta().find(p => p.a == from.get && p.symbol == symbol.get)
 
       if(removed.isDefined) {
         dfa = dfa.removeDelta(removed.get).toDFA()
-        var i = 0
-        var j = 0
-
-        while (Definition.transitions.get(i)(0) != from.get.toString)
-          i = i + 1
-
-        while (Definition.alphabetNames.get(j) != symbol.get.toString)
-          j = j + 1
-
         Definition.transitions.replace(i, 1, Definition.transitions.get(i).updated(j + 1, ""))
+        Definition.reload
       }
-    } else
-      dfa = dfa.addDelta(new DeltaFunction(from.get, symbol.get, dfa.stateFromString(state2).get)).toDFA()
+    } else if(Definition.transitions.get(i).toList(j + 1) != state2.toString){
+      dfa = dfa.addDelta(DeltaFunction(from.get, symbol.get, dfa.stateFromString(state2).get)).toDFA()
+      Definition.transitions.replace(i, 1, Definition.transitions.get(i).updated(j + 1, state2.toString))
+      Definition.reload
+    }
 
-    Definition.reload
+
+
   }
 
   def addAccepting(state: String) = {
@@ -84,16 +89,10 @@ object DFAService {
 
   def loadDemo() = dfa = DFADemo.get()
 
-  def reload() {
+  def reloadT(a: String) {
     Definition.stateNames.set(dfa.getStates.map(_.toString).toSeq)
     Definition.alphabetNames.set(dfa.getAlphabet.map(_.toString).toSeq)
-    Definition.transitions.set(dfa.getStates.toSeq.map(state => {
-      state.toString :: dfa.getAlphabet.toList.map( a =>
-        if(dfa.hasDelta(a, state)) {
-          dfa.move(a, Some(state)).getOrElse("").toString
-        } else ""
-      )
-    }))
+    Definition.transitions.set(dfa.getStates.toSeq.map(state => state.toString :: dfa.getAlphabet.toList.map( a => dfa.move(a, Some(state)).getOrElse("").toString)))
   }
 
   object Definition {
