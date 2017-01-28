@@ -30,24 +30,23 @@ class Diagram(definition: Definition) extends Section with TranslatedView{
     }
   }
 
-  val playing = Property[Boolean](false)
-
-  dom.window.setInterval(() => if(playing.get){
+  dom.window.setInterval(() => if(Controller.playing.get){
     Controller.move
     formattedInput.set(Controller.formattedInput)
     GraphService.repaint()
   }, 1000)
 
+  Controller.playing.listen{
+	case true => a.set("Pause")
+	case false => a.set("Play")
+  }
+  
   play.listen{
-    case _ => {
-      if(playing.get) {
-        playing.set(false)
-        a.set("Play")
-      } else {
-        playing.set(true)
-        a.set("Pause")
-      }
-    }
+    case _ =>
+      if(Controller.playing.get)
+        Controller.playing.set(false)
+      else
+        Controller.playing.set(true)
   }
 
   next.listen{
